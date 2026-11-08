@@ -4,312 +4,263 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#10091c">
+<meta name="theme-color" content="#0b0713">
 <meta name="description" content="AnaDesign Studio – kreativni digitalni studio za sajtove, aplikacije i AI projekte.">
-<title>AnaDesign Studio | Creativity & Innovation</title>
+<title>AnaDesign Studio | Digital Creative Studio</title>
 
 <style>
-:root {
-  --bg:#0b0713;
-  --panel:#171025;
-  --gold:#e9bd62;
-  --purple:#a76bff;
-  --white:#fffaf2;
-  --muted:#b8adca;
-  --border:#382747;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-* {box-sizing:border-box;margin:0;padding:0}
-html {scroll-behavior:smooth}
+html { scroll-behavior: smooth; }
+
 body {
-  background:var(--bg);
-  color:var(--white);
-  font-family:Arial,sans-serif;
-  line-height:1.7;
+  background: #0b0713;
+  color: #fffaf2;
+  font-family: Arial, sans-serif;
+  line-height: 1.7;
 }
-a {text-decoration:none;color:inherit}
+
+a { text-decoration: none; color: inherit; }
 
 header {
-  position:sticky;
-  top:0;
-  z-index:100;
-  background:rgba(11,7,19,.95);
-  backdrop-filter:blur(15px);
-  border-bottom:1px solid var(--border);
-  padding:12px 7%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(11,7,19,.96);
+  border-bottom: 1px solid #382747;
+  padding: 12px 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .brand {
-  display:flex;
-  align-items:center;
-  gap:12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .brand img {
-  width:53px;
-  height:53px;
-  object-fit:contain;
-  background:#fff;
-  border-radius:50%;
-  padding:3px;
+  width: 55px;
+  height: 55px;
+  object-fit: contain;
+  background: white;
+  border-radius: 50%;
+  padding: 3px;
 }
 
 .brand-name {
-  font-size:19px;
-  font-weight:800;
-  letter-spacing:1px;
-  line-height:1.2;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: 1px;
 }
 
-.brand-name span {color:var(--gold)}
+.brand-name span { color: #e9bd62; }
 
 .brand-sub {
-  font-size:9px;
-  letter-spacing:3px;
-  color:var(--muted);
-  margin-top:4px;
+  color: #b8adca;
+  font-size: 9px;
+  letter-spacing: 4px;
 }
 
 nav {
-  display:flex;
-  gap:25px;
-  align-items:center;
+  display: flex;
+  gap: 24px;
 }
 
 nav a {
-  color:#ded5e9;
-  font-size:13px;
-  transition:.2s;
+  color: #ded5e9;
+  font-size: 13px;
 }
 
-nav a:hover {color:var(--gold)}
+nav a:hover { color: #e9bd62; }
 
 .hero {
-  min-height:590px;
-  padding:115px 8% 100px;
-  text-align:center;
-  background:
-    radial-gradient(ellipse at 50% 5%,#45205e 0%,transparent 65%),
-    var(--bg);
-  position:relative;
-  overflow:hidden;
-}
-
-.hero:before {
-  content:"";
-  position:absolute;
-  width:450px;
-  height:450px;
-  border:1px solid #9b69bc22;
-  border-radius:50%;
-  top:40px;
-  left:calc(50% - 225px);
-  pointer-events:none;
+  text-align: center;
+  padding: 120px 8% 110px;
+  min-height: 580px;
+  background: radial-gradient(ellipse at 50% 0%, #48245d, #0b0713 72%);
 }
 
 .eyebrow {
-  display:inline-block;
-  border:1px solid #9b70b7;
-  color:var(--gold);
-  padding:7px 20px;
-  border-radius:30px;
-  font-size:11px;
-  letter-spacing:3px;
-  margin-bottom:30px;
+  display: inline-block;
+  border: 1px solid #9970b7;
+  color: #e9bd62;
+  border-radius: 30px;
+  padding: 7px 20px;
+  font-size: 11px;
+  letter-spacing: 3px;
+  margin-bottom: 30px;
 }
 
 .hero h1 {
-  position:relative;
-  font-size:clamp(40px,6vw,72px);
-  line-height:1.13;
-  max-width:950px;
-  margin:auto;
-  letter-spacing:-2px;
+  max-width: 950px;
+  margin: auto;
+  font-size: clamp(40px, 6vw, 72px);
+  line-height: 1.12;
 }
 
 .hero h1 span {
-  background:linear-gradient(90deg,#f7d98f,#bd8bff);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
+  background: linear-gradient(90deg,#f4d58d,#b47bff);
+  color: transparent;
+  background-clip: text;
 }
 
 .hero p {
-  position:relative;
-  color:var(--muted);
-  max-width:650px;
-  margin:25px auto 35px;
-  font-size:16px;
+  color: #c1b6d0;
+  max-width: 650px;
+  margin: 25px auto 35px;
 }
 
 .button {
-  display:inline-block;
-  padding:14px 28px;
-  border-radius:7px;
-  background:linear-gradient(110deg,#a16ae9,#d1a3ff);
-  color:#160d23;
-  font-weight:bold;
-  transition:.25s;
+  display: inline-block;
+  padding: 14px 28px;
+  border-radius: 7px;
+  background: linear-gradient(110deg,#a16ae9,#d1a3ff);
+  color: #180d23;
+  font-weight: bold;
 }
 
-.button:hover {
-  transform:translateY(-3px);
-  box-shadow:0 8px 30px #a76bff44;
-}
+.button:hover { opacity: .85; }
 
-.button-outline {
-  display:inline-block;
-  padding:13px 25px;
-  border:1px solid var(--gold);
-  border-radius:7px;
-  color:var(--gold);
-  margin-left:10px;
-}
+section { padding: 80px 8%; }
 
-section {padding:80px 8%}
-
-.section-label {
-  color:var(--gold);
-  font-size:11px;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  margin-bottom:12px;
+.label {
+  color: #e9bd62;
+  font-size: 11px;
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
 }
 
 .section-title {
-  font-size:clamp(27px,4vw,38px);
-  margin-bottom:14px;
+  font-size: clamp(27px,4vw,38px);
+  margin-bottom: 15px;
 }
 
 .intro {
-  color:var(--muted);
-  max-width:650px;
-  margin-bottom:38px;
+  color: #b8adca;
+  max-width: 650px;
+  margin-bottom: 40px;
 }
 
 .cards {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:22px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap: 22px;
 }
 
 .card {
-  background:linear-gradient(145deg,#21152e,#120d1e);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:30px;
-  transition:.3s;
+  background: linear-gradient(145deg,#21152e,#120d1e);
+  border: 1px solid #382747;
+  border-radius: 14px;
+  padding: 30px;
+  transition: .3s;
 }
 
 .card:hover {
-  transform:translateY(-6px);
-  border-color:var(--gold);
+  transform: translateY(-5px);
+  border-color: #e9bd62;
 }
 
 .card-icon {
-  font-size:34px;
-  margin-bottom:15px;
+  font-size: 35px;
+  margin-bottom: 15px;
 }
 
-.card h3 {margin-bottom:10px}
+.card h3 { margin-bottom: 10px; }
 
 .card p {
-  color:var(--muted);
-  font-size:14px;
+  color: #b8adca;
+  font-size: 14px;
 }
 
-.projects {
-  background:#100b1a;
-}
+.projects { background: #100b1a; }
 
 .project {
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:13px;
-  overflow:hidden;
-  transition:.3s;
-}
-
-.project:hover {
-  transform:translateY(-5px);
-  border-color:var(--gold);
+  background: #171025;
+  border: 1px solid #382747;
+  border-radius: 14px;
+  overflow: hidden;
 }
 
 .project-art {
-  height:155px;
-  display:grid;
-  place-items:center;
-  font-size:48px;
-  background:linear-gradient(135deg,#422050,#171025);
+  height: 150px;
+  display: grid;
+  place-items: center;
+  font-size: 48px;
+  background: linear-gradient(135deg,#48245d,#171025);
 }
 
-.project-content {padding:24px}
+.project-content { padding: 24px; }
 
 .project-content p {
-  color:var(--muted);
-  font-size:14px;
-  margin-top:8px;
+  color: #b8adca;
+  font-size: 14px;
+  margin-top: 8px;
 }
 
 .status {
-  display:inline-block;
-  color:var(--gold);
-  border:1px solid #92703e;
-  border-radius:20px;
-  font-size:11px;
-  padding:4px 12px;
-  margin-top:15px;
+  display: inline-block;
+  color: #e9bd62;
+  border: 1px solid #92703e;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 11px;
+  margin-top: 15px;
 }
 
 .about {
-  max-width:850px;
-  text-align:center;
-  margin:auto;
+  max-width: 850px;
+  margin: auto;
+  text-align: center;
 }
 
-.about p {color:var(--muted)}
+.about p { color: #b8adca; }
 
 .contact {
-  text-align:center;
-  background:radial-gradient(ellipse at bottom,#3b2051,transparent 70%);
+  text-align: center;
+  background: radial-gradient(ellipse at bottom,#3b2051,transparent 70%);
 }
 
 .contact p {
-  color:var(--muted);
-  margin:15px 0 25px;
+  color: #b8adca;
+  margin: 15px 0 25px;
 }
 
 footer {
-  border-top:1px solid var(--border);
-  padding:30px 8%;
-  text-align:center;
-  color:#a99bb8;
-  font-size:12px;
+  border-top: 1px solid #382747;
+  padding: 30px 8%;
+  text-align: center;
+  color: #a99bb8;
+  font-size: 12px;
 }
 
-.footer-brand {
-  color:var(--gold);
-  font-weight:bold;
-  letter-spacing:2px;
-  margin-bottom:8px;
+.footer-logo {
+  color: #e9bd62;
+  font-weight: bold;
+  letter-spacing: 3px;
+  margin-bottom: 8px;
 }
 
 @media(max-width:700px) {
   header {
-    flex-direction:column;
-    gap:14px;
+    flex-direction: column;
+    gap: 14px;
   }
+
   nav {
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
   }
-  .hero {padding:85px 6%}
-  section {padding:60px 6%}
-  .button-outline {margin:12px 0 0}
+
+  .hero { padding: 85px 6%; }
+  section { padding: 60px 6%; }
 }
 </style>
 </head>
@@ -319,7 +270,7 @@ footer {
 <header>
   <a href="#home" class="brand">
     <img src="Glossy%20Golden%20Ribbon%20A%20with%20Sparkling%20Accent.png"
-         alt="AnaDesign Studio simbol">
+         alt="Zlatni AnaDesign Studio logo">
     <div>
       <div class="brand-name">ANA<span>DESIGN</span></div>
       <div class="brand-sub">S T U D I O</div>
@@ -338,9 +289,7 @@ footer {
 <main>
 
 <section class="hero" id="home">
-  <div class="eyebrow">
-    CREATIVITY · TECHNOLOGY · INNOVATION
-  </div>
+  <div class="eyebrow">CREATIVITY · TECHNOLOGY · INNOVATION</div>
 
   <h1>
     Ideje koje postaju
@@ -354,11 +303,10 @@ footer {
   </p>
 
   <a class="button" href="#projects">Otkrij naše projekte →</a>
-  <a class="button-outline" href="#services">Istraži studio</a>
 </section>
 
 <section id="services">
-  <div class="section-label">Šta stvaramo</div>
+  <div class="label">Šta stvaramo</div>
   <h2 class="section-title">Naše oblasti stvaranja</h2>
 
   <p class="intro">
@@ -394,7 +342,7 @@ footer {
 </section>
 
 <section class="projects" id="projects">
-  <div class="section-label">Naš portfolio</div>
+  <div class="label">Naš portfolio</div>
   <h2 class="section-title">Projekti AnaDesign Studio</h2>
 
   <p class="intro">
@@ -434,7 +382,7 @@ footer {
 
 <section id="about">
   <div class="about">
-    <div class="section-label">Naša filozofija</div>
+    <div class="label">Naša filozofija</div>
     <h2 class="section-title">Kreativnost nema granice.</h2>
     <p>
       AnaDesign Studio je nezavisna kreativna digitalna
@@ -447,7 +395,7 @@ footer {
 </section>
 
 <section class="contact" id="contact">
-  <div class="section-label">Kontakt</div>
+  <div class="label">Kontakt</div>
   <h2 class="section-title">Svaka nova ideja je početak.</h2>
   <p>Pratite naš razvoj i otkrijte nove digitalne projekte.</p>
   <a class="button" href="#home">Nazad na početak ↑</a>
@@ -456,7 +404,7 @@ footer {
 </main>
 
 <footer>
-  <div class="footer-brand">ANA DESIGN STUDIO</div>
+  <div class="footer-logo">ANA DESIGN STUDIO</div>
   CREATIVITY · TECHNOLOGY · INNOVATION
   <br><br>
   © 2026 AnaDesign Studio. Sva prava zadržana.
