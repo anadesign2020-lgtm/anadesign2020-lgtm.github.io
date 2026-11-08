@@ -1,10 +1,14 @@
+from pathlib import Path
 
-<!DOCTYPE html>
+html = r'''<!DOCTYPE html>
 <html lang="sr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#171126">
+<meta name="description" content="Tvoj lični organizator svakodnevnog života.">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
 <title>Smart Life Planner | AnaDesign Studio</title>
 <style>
 :root{--bg:#100d1b;--panel:#1d1830;--panel2:#27203c;--gold:#d9b568;--purple:#a78bfa;--text:#f5f0ff;--muted:#aaa1bd;--line:#39304d}
@@ -47,6 +51,7 @@ textarea{min-height:100px;resize:vertical}
 .section.active{display:block}
 .tag{color:var(--gold);font-size:12px}
 footer{text-align:center;color:var(--muted);font-size:12px;padding:25px}
+.install-note{font-size:12px;color:var(--muted);margin-top:10px}
 @media(max-width:750px){.grid{grid-template-columns:1fr 1fr}.app{padding:14px}.today{text-align:left}}
 @media(max-width:480px){.grid{grid-template-columns:1fr}nav button{flex:1;font-size:12px;padding:10px 7px}.welcome{padding:18px}}
 </style>
@@ -77,6 +82,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:25px}
   <h2>Dobro došla u svoj novi dan!</h2>
   <p>Organizuj obaveze, zabeleži ideje, postavi ciljeve i ne zaboravi ono što ti je važno. Sve na jednom mestu.</p>
   <button class="btn primary" onclick="showTab('tasks')">Pogledaj moje zadatke →</button>
+  <div class="install-note" id="installHelp">Na telefonu možeš dodati planer na početni ekran iz menija pregledača.</div>
  </div>
  <div class="grid">
   <div class="card"><div class="stat-label">Svi zadaci</div><div class="stat" id="taskCount">0</div></div>
@@ -144,7 +150,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:25px}
   <button class="btn primary" onclick="addAlarm()">+ Sačuvaj podsetnik</button>
   <button class="btn" onclick="enableNotifications()">Dozvoli obaveštenja</button>
   <button class="btn" onclick="testSound()">▶ Testiraj zvuk</button>
-  <p class="small">Zvuk se proverava dok je planer otvoren. Za pouzdane alarme kada je aplikacija zatvorena biće potrebna dodatna podrška.</p>
+  <p class="small">Važno: zvučni alarm u ovoj verziji radi dok je planer otvoren. Obaveštenja u pozadini i pouzdan alarm kada je aplikacija zatvorena zahtevaju dodatnu podršku i razlikuju se između telefona.</p>
  </div>
  <div class="card"><h3>Moji podsetnici</h3><div id="alarmList"></div></div>
 </section>
@@ -189,6 +195,18 @@ function renderCalendar(){let d=calendarDate.value||todayISO();calendarDate.valu
 document.getElementById("today").textContent=new Date().toLocaleDateString("sr-RS",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
 taskDate.value=todayISO();calendarDate.value=todayISO();alarmDate.value=todayISO();
 renderAll();setInterval(checkAlarms,15000);
+
+if("serviceWorker" in navigator){
+ window.addEventListener("load",()=>{
+  navigator.serviceWorker.register("./sw.js")
+   .then(()=>console.log("Smart Life Planner je spreman za offline režim."))
+   .catch(error=>console.error("Service Worker:",error));
+ });
+}
 </script>
 </body>
 </html>
+'''
+path = Path("/mnt/data/planner-index.html")
+path.write_text(html, encoding="utf-8")
+print(f"Napravljen je kompletan fajl: {path} ({len(html):,} karaktera)")
