@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="sr">
 <head>
@@ -7,408 +6,95 @@
 <meta name="theme-color" content="#0b0713">
 <meta name="description" content="AnaDesign Studio – kreativni digitalni studio za sajtove, aplikacije i AI projekte.">
 <title>AnaDesign Studio | Digital Creative Studio</title>
-
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html { scroll-behavior: smooth; }
-
-body {
-  background: #0b0713;
-  color: #fffaf2;
-  font-family: Arial, sans-serif;
-  line-height: 1.7;
-}
-
-a { text-decoration: none; color: inherit; }
-
-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(11,7,19,.96);
-  border-bottom: 1px solid #382747;
-  padding: 12px 7%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.brand img {
-  width: 55px;
-  height: 55px;
-  object-fit: contain;
-  background: white;
-  border-radius: 50%;
-  padding: 3px;
-}
-
-.brand-name {
-  font-size: 19px;
-  font-weight: 800;
-  letter-spacing: 1px;
-}
-
-.brand-name span { color: #e9bd62; }
-
-.brand-sub {
-  color: #b8adca;
-  font-size: 9px;
-  letter-spacing: 4px;
-}
-
-nav {
-  display: flex;
-  gap: 24px;
-}
-
-nav a {
-  color: #ded5e9;
-  font-size: 13px;
-}
-
-nav a:hover { color: #e9bd62; }
-
-.hero {
-  text-align: center;
-  padding: 120px 8% 110px;
-  min-height: 580px;
-  background: radial-gradient(ellipse at 50% 0%, #48245d, #0b0713 72%);
-}
-
-.eyebrow {
-  display: inline-block;
-  border: 1px solid #9970b7;
-  color: #e9bd62;
-  border-radius: 30px;
-  padding: 7px 20px;
-  font-size: 11px;
-  letter-spacing: 3px;
-  margin-bottom: 30px;
-}
-
-.hero h1 {
-  max-width: 950px;
-  margin: auto;
-  font-size: clamp(40px, 6vw, 72px);
-  line-height: 1.12;
-}
-
-.hero h1 span {
-  background: linear-gradient(90deg,#f4d58d,#b47bff);
-  color: transparent;
-  background-clip: text;
-}
-
-.hero p {
-  color: #c1b6d0;
-  max-width: 650px;
-  margin: 25px auto 35px;
-}
-
-.button {
-  display: inline-block;
-  padding: 14px 28px;
-  border-radius: 7px;
-  background: linear-gradient(110deg,#a16ae9,#d1a3ff);
-  color: #180d23;
-  font-weight: bold;
-}
-
-.button:hover { opacity: .85; }
-
-section { padding: 80px 8%; }
-
-.label {
-  color: #e9bd62;
-  font-size: 11px;
-  letter-spacing: 3px;
-  margin-bottom: 12px;
-  text-transform: uppercase;
-}
-
-.section-title {
-  font-size: clamp(27px,4vw,38px);
-  margin-bottom: 15px;
-}
-
-.intro {
-  color: #b8adca;
-  max-width: 650px;
-  margin-bottom: 40px;
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-  gap: 22px;
-}
-
-.card {
-  background: linear-gradient(145deg,#21152e,#120d1e);
-  border: 1px solid #382747;
-  border-radius: 14px;
-  padding: 30px;
-  transition: .3s;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  border-color: #e9bd62;
-}
-
-.card-icon {
-  font-size: 35px;
-  margin-bottom: 15px;
-}
-
-.card h3 { margin-bottom: 10px; }
-
-.card p {
-  color: #b8adca;
-  font-size: 14px;
-}
-
-.projects { background: #100b1a; }
-
-.project {
-  background: #171025;
-  border: 1px solid #382747;
-  border-radius: 14px;
-  overflow: hidden;
-}
-
-.project-art {
-  height: 150px;
-  display: grid;
-  place-items: center;
-  font-size: 48px;
-  background: linear-gradient(135deg,#48245d,#171025);
-}
-
-.project-content { padding: 24px; }
-
-.project-content p {
-  color: #b8adca;
-  font-size: 14px;
-  margin-top: 8px;
-}
-
-.status {
-  display: inline-block;
-  color: #e9bd62;
-  border: 1px solid #92703e;
-  border-radius: 20px;
-  padding: 4px 12px;
-  font-size: 11px;
-  margin-top: 15px;
-}
-
-.about {
-  max-width: 850px;
-  margin: auto;
-  text-align: center;
-}
-
-.about p { color: #b8adca; }
-
-.contact {
-  text-align: center;
-  background: radial-gradient(ellipse at bottom,#3b2051,transparent 70%);
-}
-
-.contact p {
-  color: #b8adca;
-  margin: 15px 0 25px;
-}
-
-footer {
-  border-top: 1px solid #382747;
-  padding: 30px 8%;
-  text-align: center;
-  color: #a99bb8;
-  font-size: 12px;
-}
-
-.footer-logo {
-  color: #e9bd62;
-  font-weight: bold;
-  letter-spacing: 3px;
-  margin-bottom: 8px;
-}
-
-@media(max-width:700px) {
-  header {
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  nav {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-  }
-
-  .hero { padding: 85px 6%; }
-  section { padding: 60px 6%; }
-}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#0b0713;color:#fffaf2;font-family:Arial,sans-serif;line-height:1.7}
+a{text-decoration:none;color:inherit}
+header{position:sticky;top:0;z-index:100;background:rgba(11,7,19,.96);border-bottom:1px solid #382747;padding:12px 7%;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{width:55px;height:55px;object-fit:contain;background:white;border-radius:50%;padding:3px}
+.brand-name{font-size:19px;font-weight:800;letter-spacing:1px}.brand-name span{color:#e9bd62}
+.brand-sub{color:#b8adca;font-size:9px;letter-spacing:4px}
+nav{display:flex;gap:24px}nav a{color:#ded5e9;font-size:13px}nav a:hover{color:#e9bd62}
+.hero{text-align:center;padding:120px 8% 110px;min-height:580px;background:radial-gradient(ellipse at 50% 0%,#48245d,#0b0713 72%)}
+.eyebrow{display:inline-block;border:1px solid #9970b7;color:#e9bd62;border-radius:30px;padding:7px 20px;font-size:11px;letter-spacing:3px;margin-bottom:30px}
+.hero h1{max-width:950px;margin:auto;font-size:clamp(40px,6vw,72px);line-height:1.12}
+.hero h1 span{background:linear-gradient(90deg,#f4d58d,#b47bff);color:transparent;background-clip:text}
+.hero p{color:#c1b6d0;max-width:650px;margin:25px auto 35px}
+.button{display:inline-block;padding:14px 28px;border-radius:7px;background:linear-gradient(110deg,#a16ae9,#d1a3ff);color:#180d23;font-weight:bold}
+.button:hover{opacity:.85}
+section{padding:80px 8%}
+.label{color:#e9bd62;font-size:11px;letter-spacing:3px;margin-bottom:12px;text-transform:uppercase}
+.section-title{font-size:clamp(27px,4vw,38px);margin-bottom:15px}
+.intro{color:#b8adca;max-width:650px;margin-bottom:40px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px}
+.card{background:linear-gradient(145deg,#21152e,#120d1e);border:1px solid #382747;border-radius:14px;padding:30px;transition:.3s}
+.card:hover{transform:translateY(-5px);border-color:#e9bd62}
+.card-icon{font-size:35px;margin-bottom:15px}.card h3{margin-bottom:10px}.card p{color:#b8adca;font-size:14px}
+.projects{background:#100b1a}
+.project{background:#171025;border:1px solid #382747;border-radius:14px;overflow:hidden;transition:.3s}
+.project:hover{transform:translateY(-5px);border-color:#e9bd62}
+.project-art{height:150px;display:grid;place-items:center;font-size:48px;background:linear-gradient(135deg,#48245d,#171025)}
+.project-content{padding:24px}.project-content p{color:#b8adca;font-size:14px;margin-top:8px}
+.status{display:inline-block;color:#e9bd62;border:1px solid #92703e;border-radius:20px;padding:4px 12px;font-size:11px;margin-top:15px}
+.project-link{display:inline-block;margin-top:17px;color:#e9bd62;font-weight:bold;font-size:14px}
+.about{max-width:850px;margin:auto;text-align:center}.about p{color:#b8adca}
+.contact{text-align:center;background:radial-gradient(ellipse at bottom,#3b2051,transparent 70%)}
+.contact p{color:#b8adca;margin:15px 0 25px}
+footer{border-top:1px solid #382747;padding:30px 8%;text-align:center;color:#a99bb8;font-size:12px}
+.footer-logo{color:#e9bd62;font-weight:bold;letter-spacing:3px;margin-bottom:8px}
+@media(max-width:700px){header{flex-direction:column;gap:14px}nav{flex-wrap:wrap;justify-content:center;gap:15px}.hero{padding:85px 6%}section{padding:60px 6%}}
 </style>
 </head>
-
 <body>
-
 <header>
-  <a href="#home" class="brand">
-    <img src="Glossy%20Golden%20Ribbon%20A%20with%20Sparkling%20Accent.png"
-         alt="Zlatni AnaDesign Studio logo">
-    <div>
-      <div class="brand-name">ANA<span>DESIGN</span></div>
-      <div class="brand-sub">S T U D I O</div>
-    </div>
-  </a>
-
-  <nav>
-    <a href="#home">Početna</a>
-    <a href="#services">Oblasti</a>
-    <a href="#projects">Projekti</a>
-    <a href="#about">O nama</a>
-    <a href="#contact">Kontakt</a>
-  </nav>
+<a href="#home" class="brand">
+<img src="Glossy%20Golden%20Ribbon%20A%20with%20Sparkling%20Accent.png" alt="Zlatni AnaDesign Studio logo">
+<div><div class="brand-name">ANA<span>DESIGN</span></div><div class="brand-sub">S T U D I O</div></div>
+</a>
+<nav>
+<a href="#home">Početna</a><a href="#services">Oblasti</a><a href="#projects">Projekti</a><a href="#about">O nama</a><a href="#contact">Kontakt</a>
+</nav>
 </header>
-
 <main>
-
 <section class="hero" id="home">
-  <div class="eyebrow">CREATIVITY · TECHNOLOGY · INNOVATION</div>
-
-  <h1>
-    Ideje koje postaju
-    <span>digitalna stvarnost.</span>
-  </h1>
-
-  <p>
-    Dobro došli u AnaDesign Studio.
-    Mesto gde kreativnost, tehnologija i veštačka
-    inteligencija zajedno stvaraju nove digitalne mogućnosti.
-  </p>
-
-  <a class="button" href="#projects">Otkrij naše projekte →</a>
+<div class="eyebrow">CREATIVITY · TECHNOLOGY · INNOVATION</div>
+<h1>Ideje koje postaju <span>digitalna stvarnost.</span></h1>
+<p>Dobro došli u AnaDesign Studio. Mesto gde kreativnost, tehnologija i veštačka inteligencija zajedno stvaraju nove digitalne mogućnosti.</p>
+<a class="button" href="#projects">Otkrij naše projekte →</a>
 </section>
-
 <section id="services">
-  <div class="label">Šta stvaramo</div>
-  <h2 class="section-title">Naše oblasti stvaranja</h2>
-
-  <p class="intro">
-    Jedan kreativni studio. Mnogo ideja.
-    Digitalna rešenja koja nastaju iz radoznalosti i mašte.
-  </p>
-
-  <div class="cards">
-    <div class="card">
-      <div class="card-icon">🌐</div>
-      <h3>Internet sajtovi</h3>
-      <p>Moderni, elegantni i funkcionalni internet sajtovi.</p>
-    </div>
-
-    <div class="card">
-      <div class="card-icon">📱</div>
-      <h3>Aplikacije</h3>
-      <p>Praktične digitalne aplikacije za svakodnevni život.</p>
-    </div>
-
-    <div class="card">
-      <div class="card-icon">🤖</div>
-      <h3>AI laboratorija</h3>
-      <p>Veštačka inteligencija, digitalni asistenti i pametni alati.</p>
-    </div>
-
-    <div class="card">
-      <div class="card-icon">💡</div>
-      <h3>Inovacije</h3>
-      <p>Nove ideje, eksperimenti i digitalni proizvodi.</p>
-    </div>
-  </div>
+<div class="label">Šta stvaramo</div><h2 class="section-title">Naše oblasti stvaranja</h2>
+<p class="intro">Jedan kreativni studio. Mnogo ideja. Digitalna rešenja koja nastaju iz radoznalosti i mašte.</p>
+<div class="cards">
+<div class="card"><div class="card-icon">🌐</div><h3>Internet sajtovi</h3><p>Moderni, elegantni i funkcionalni internet sajtovi.</p></div>
+<div class="card"><div class="card-icon">📱</div><h3>Aplikacije</h3><p>Praktične digitalne aplikacije za svakodnevni život.</p></div>
+<div class="card"><div class="card-icon">🤖</div><h3>AI laboratorija</h3><p>Veštačka inteligencija, digitalni asistenti i pametni alati.</p></div>
+<div class="card"><div class="card-icon">💡</div><h3>Inovacije</h3><p>Nove ideje, eksperimenti i digitalni proizvodi.</p></div>
+</div>
 </section>
-
 <section class="projects" id="projects">
-  <div class="label">Naš portfolio</div>
-  <h2 class="section-title">Projekti AnaDesign Studio</h2>
-
-  <p class="intro">
-    Ovde predstavljamo naše digitalne radove.
-    Svaki novi projekat dobiće svoje mesto u našoj kolekciji.
-  </p>
-
-  <div class="cards">
-    <article class="project">
-      <div class="project-art">🌐</div>
-      <div class="project-content">
-        <h3>Web projekti</h3>
-        <p>Internet sajtovi i digitalne prezentacije.</p>
-        <span class="status">Kolekcija u izradi</span>
-      </div>
-    </article>
-
-    <article class="project">
-      <div class="project-art">📲</div>
-      <div class="project-content">
-        <h3>Aplikacije</h3>
-        <p>Digitalni alati i aplikacije koje razvijamo.</p>
-        <span class="status">Kolekcija u izradi</span>
-      </div>
-    </article>
-
-    <article class="project">
-      <div class="project-art">✨</div>
-      <div class="project-content">
-        <h3>AI projekti</h3>
-        <p>Eksperimenti i kreativna rešenja uz AI.</p>
-        <span class="status">Kolekcija u izradi</span>
-      </div>
-    </article>
-  </div>
+<div class="label">Naš portfolio</div><h2 class="section-title">Projekti AnaDesign Studio</h2>
+<p class="intro">Ovde predstavljamo naše digitalne radove. Svaki novi projekat dobiće svoje mesto u našoj kolekciji.</p>
+<div class="cards">
+<article class="project"><div class="project-art">🌐</div><div class="project-content"><h3>Web projekti</h3><p>Internet sajtovi i digitalne prezentacije.</p><span class="status">Kolekcija u izradi</span></div></article>
+<article class="project"><div class="project-art">📲</div><div class="project-content"><h3>Aplikacije</h3><p>Digitalni alati i aplikacije koje razvijamo.</p><span class="status">Kolekcija u izradi</span></div></article>
+<article class="project"><div class="project-art">✨</div><div class="project-content"><h3>AI projekti</h3><p>Eksperimenti i kreativna rešenja uz AI.</p><span class="status">Kolekcija u izradi</span></div></article>
+<article class="project">
+<div class="project-art">📅</div>
+<div class="project-content">
+<h3>Smart Life Planner</h3>
+<p>Lični digitalni planer za zadatke, kalendar, beleške, ciljeve, kupovinu i podsetnike. Dostupan na računaru i mobilnom telefonu.</p>
+<span class="status">Prva aplikacija · Dostupna</span><br>
+<a class="project-link" href="./planner/">Otvori Smart Life Planner →</a>
+</div></article>
+</div>
 </section>
-
-<section id="about">
-  <div class="about">
-    <div class="label">Naša filozofija</div>
-    <h2 class="section-title">Kreativnost nema granice.</h2>
-    <p>
-      AnaDesign Studio je nezavisna kreativna digitalna
-      radionica posvećena istraživanju tehnologije,
-      razvoju internet sajtova, aplikacija i AI projekata.
-      Verujemo da velike ideje mogu početi malim koracima
-      i da tehnologija treba da bude dostupna svima.
-    </p>
-  </div>
-</section>
-
-<section class="contact" id="contact">
-  <div class="label">Kontakt</div>
-  <h2 class="section-title">Svaka nova ideja je početak.</h2>
-  <p>Pratite naš razvoj i otkrijte nove digitalne projekte.</p>
-  <a class="button" href="#home">Nazad na početak ↑</a>
-</section>
-
+<section id="about"><div class="about"><div class="label">Naša filozofija</div><h2 class="section-title">Kreativnost nema granice.</h2>
+<p>AnaDesign Studio je nezavisna kreativna digitalna radionica posvećena istraživanju tehnologije, razvoju internet sajtova, aplikacija i AI projekata. Verujemo da velike ideje mogu početi malim koracima i da tehnologija treba da bude dostupna svima.</p></div></section>
+<section class="contact" id="contact"><div class="label">Kontakt</div><h2 class="section-title">Svaka nova ideja je početak.</h2><p>Pratite naš razvoj i otkrijte nove digitalne projekte.</p><a class="button" href="#home">Nazad na početak ↑</a></section>
 </main>
-
-<footer>
-  <div class="footer-logo">ANA DESIGN STUDIO</div>
-  CREATIVITY · TECHNOLOGY · INNOVATION
-  <br><br>
-  © 2026 AnaDesign Studio. Sva prava zadržana.
-</footer>
-
+<footer><div class="footer-logo">ANA DESIGN STUDIO</div>CREATIVITY · TECHNOLOGY · INNOVATION<br><br>© 2026 AnaDesign Studio. Sva prava zadržana.</footer>
 </body>
 </html>
