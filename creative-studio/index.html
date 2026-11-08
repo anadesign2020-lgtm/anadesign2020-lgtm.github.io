@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#171126">
+<title>AI Creative Studio – Digital Product Creator</title>
+<style>
+:root{--bg:#100c19;--panel:#1b1528;--panel2:#241b35;--gold:#d9b66f;--gold2:#f0d99d;--violet:#9b7bd1;--text:#f6f0ff;--muted:#b9adc9;--line:#3a2d50;--good:#8ac6a0}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 15% 0%,#302044 0,#100c19 42%);color:var(--text);font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+button,input,textarea,select{font:inherit}button{cursor:pointer}
+header{display:flex;align-items:center;justify-content:space-between;padding:20px max(5vw,22px);border-bottom:1px solid #ffffff18;background:#100c19bb;position:sticky;top:0;z-index:5;backdrop-filter:blur(12px)}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;border:1px solid var(--gold);border-radius:13px;display:grid;place-items:center;color:var(--gold2);font-family:Georgia,serif;font-size:27px;box-shadow:0 0 22px #d9b66f20}.brand strong{letter-spacing:1.5px;font-size:14px}.brand small{display:block;color:var(--muted);font-size:11px;margin-top:4px;letter-spacing:2px}
+.header-note{color:var(--muted);font-size:12px}
+main{max-width:1120px;margin:auto;padding:46px 22px 80px}.eyebrow{color:var(--gold);text-transform:uppercase;letter-spacing:3px;font-size:11px;font-weight:bold}
+h1{font:clamp(34px,6vw,58px)/1.08 Georgia,serif;margin:14px 0 16px;max-width:800px}h1 span{color:var(--gold2)}.lead{color:var(--muted);font-size:17px;line-height:1.7;max-width:720px}
+.hero{padding:22px 0 36px}.section-title{font:27px Georgia,serif;margin:30px 0 8px}.section-sub{color:var(--muted);line-height:1.6;margin:0 0 22px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.type-card{background:linear-gradient(145deg,#241b35,#181222);border:1px solid var(--line);border-radius:18px;padding:23px;min-height:215px;transition:.2s;cursor:pointer}.type-card:hover{border-color:var(--gold);transform:translateY(-3px)}.type-card .symbol{font-size:29px;margin-bottom:18px}.type-card h3{font:22px Georgia,serif;margin:0 0 10px}.type-card p{color:var(--muted);font-size:14px;line-height:1.55;margin:0 0 18px}.text-link{color:var(--gold2);font-weight:bold;font-size:13px}
+.help-card{margin-top:22px;padding:22px;border-radius:16px;border:1px solid #9b7bd155;background:linear-gradient(100deg,#38275088,#1b1528);display:flex;align-items:center;justify-content:space-between;gap:18px}.help-card h3{margin:0 0 7px;font:21px Georgia,serif}.help-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}
+.btn{border:0;border-radius:10px;padding:13px 19px;font-weight:bold;background:linear-gradient(120deg,var(--gold),var(--gold2));color:#21172c}.btn.secondary{background:#302441;color:var(--text);border:1px solid var(--line)}.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--muted)}.btn:disabled{opacity:.4;cursor:not-allowed}
+.wizard{display:none}.wizard.active{display:block}.home.hidden{display:none}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:22px}.back{color:var(--gold2);background:none;border:0;padding:8px 0}.stepcount{font-size:12px;color:var(--muted)}
+.progress{height:5px;background:#302441;border-radius:9px;overflow:hidden;margin-bottom:32px}.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--violet),var(--gold));width:20%;transition:.25s}
+.wizard-grid{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:22px}.work-panel,.side-panel{background:#1b1528;border:1px solid var(--line);border-radius:18px;padding:clamp(20px,4vw,34px)}.side-panel{align-self:start}.step-title{font:clamp(25px,4vw,34px) Georgia,serif;margin:0 0 10px}.step-desc{color:var(--muted);line-height:1.6;margin:0 0 26px}
+.field{margin:20px 0}.field label{display:block;font-size:13px;color:var(--gold2);font-weight:bold;margin-bottom:9px}.field input,.field textarea,.field select{width:100%;background:#110d1b;border:1px solid #49385f;color:var(--text);padding:14px;border-radius:10px;outline:none}.field textarea{min-height:110px;resize:vertical;line-height:1.55}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--gold)}
+.choice-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.choice{border:1px solid var(--line);background:#171121;color:var(--text);padding:14px;border-radius:11px;text-align:left}.choice.selected{border-color:var(--gold);background:#342744}.choice b{display:block;margin-bottom:5px}.choice small{color:var(--muted);line-height:1.4}
+.hint{font-size:12px;color:var(--muted);line-height:1.55;margin-top:8px}.actions{display:flex;justify-content:space-between;gap:12px;margin-top:30px}.side-panel h4{font:19px Georgia,serif;margin:0 0 12px}.side-panel p,.side-panel li{font-size:13px;line-height:1.6;color:var(--muted)}.side-panel ul{padding-left:18px}.tip{border-left:2px solid var(--gold);padding-left:12px;margin-top:18px}
+.summary{background:#110d1b;border:1px solid var(--line);padding:16px;border-radius:12px;margin:14px 0}.summary strong{color:var(--gold2);display:block;font-size:12px;margin-bottom:5px}.summary span{color:var(--muted);font-size:14px;line-height:1.5}
+.editor{display:grid;grid-template-columns:250px minmax(0,1fr);gap:18px}.chapter-list{background:#110d1b;border:1px solid var(--line);border-radius:12px;padding:12px}.chapter-item{display:block;width:100%;text-align:left;background:none;border:0;border-radius:8px;color:var(--muted);padding:10px;font-size:13px}.chapter-item.active{background:#342744;color:var(--gold2)}.editor-area textarea{min-height:340px}.preview-paper{background:#fff;color:#241b35;padding:34px;border-radius:8px;min-height:400px;line-height:1.65}.preview-paper h2{font:28px Georgia,serif;color:#4d326c}.preview-paper .cover{min-height:260px;display:flex;flex-direction:column;justify-content:center;text-align:center;border:1px solid #d9b66f;padding:25px;margin-bottom:25px}.preview-paper .cover small{letter-spacing:3px;color:#8a6b37}.preview-paper .cover h1{font:34px Georgia,serif;color:#352044;margin:20px auto}.preview-paper p{white-space:pre-wrap}
+footer{text-align:center;color:#776a89;font-size:11px;padding:28px}
+@media(max-width:800px){.cards{grid-template-columns:1fr}.wizard-grid{grid-template-columns:1fr}.side-panel{order:2}.editor{grid-template-columns:1fr}.chapter-list{display:flex;overflow:auto;gap:5px}.chapter-item{min-width:130px}.header-note{display:none}.help-card{align-items:flex-start;flex-direction:column}.choice-list{grid-template-columns:1fr}}
+@media print{body{background:white;color:#222}.no-print,header,footer,.wizard,.home{display:none!important}#printArea{display:block!important}.preview-paper{border:0;color:#222}.preview-paper h2{color:#352044}}
+#printArea{display:none}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand"><div class="logo">A</div><div><strong>ANADESIGN STUDIO</strong><small>AI CREATIVE STUDIO</small></div></div>
+ <div class="header-note">Tvoja ideja. Tvoj prvi digitalni proizvod.</div>
+</header>
+<main>
+<section class="home" id="home">
+ <div class="hero">
+  <div class="eyebrow">Digital Product Creator</div>
+  <h1>Od ideje do gotovog <span>digitalnog proizvoda.</span></h1>
+  <p class="lead">Ne moraš da znaš dizajn, pisanje niti tehničke stvari. Vodićemo te korak po korak, jednostavno i bez žurbe, dok praviš svoj prvi digitalni proizvod.</p>
+ </div>
+ <div class="eyebrow">Izaberi svoju radionicu</div>
+ <h2 class="section-title">Šta želiš da napraviš?</h2>
+ <p class="section-sub">Izaberi jednu mogućnost. Ako nisi siguran/sigurna, klikni na pomoć i zajedno ćemo pronaći najbolji početak.</p>
+ <div class="cards">
+  <div class="type-card" onclick="start('ebook')"><div class="symbol">📖</div><h3>E-book Creator</h3><p>Elektronska knjiga, praktičan vodič, zbirka recepata ili priručnik.</p><span class="text-link">Započni e-knjigu →</span></div>
+  <div class="type-card" onclick="start('planner')"><div class="symbol">🗓️</div><h3>Planner Creator</h3><p>Dnevni, nedeljni ili mesečni planer, dnevnik i organizator.</p><span class="text-link">Započni planer →</span></div>
+  <div class="type-card" onclick="start('workbook')"><div class="symbol">✍️</div><h3>Workbook Creator</h3><p>Radna sveska sa pitanjima, zadacima, vežbama i prostorom za odgovore.</p><span class="text-link">Započni radnu svesku →</span></div>
+ </div>
+ <div class="help-card"><div><h3>Ne znam odakle da počnem</h3><p>Odgovori na nekoliko jednostavnih pitanja. Pomoći ćemo ti da izabereš ideju za svoj prvi proizvod.</p></div><button class="btn" onclick="start('help')">Pronađi moju ideju</button></div>
+ <p class="hint" style="margin-top:22px">Tvoj rad se čuva u ovom pregledaču na ovom uređaju. Ova početna verzija ne koristi plaćene AI kredite.</p>
+</section>
+
+<section class="wizard" id="wizard">
+ <div class="topline"><button class="back" onclick="goHome()">← Početna</button><div class="stepcount" id="stepCount">Korak 1 od 5</div></div>
+ <div class="progress"><span id="progressBar"></span></div>
+ <div class="wizard-grid">
+  <div class="work-panel" id="stepContent"></div>
+  <aside class="side-panel"><h4>Tu smo da pomognemo</h4><p id="sideText">Ne brini ako nemaš iskustva. Svaki korak možeš da promeniš kasnije.</p><div class="tip"><p><b style="color:var(--gold2)">Mali savet</b><br>Ne moraš odmah da smisliš savršen proizvod. Dovoljna je početna ideja. Zajedno ćemo je razviti.</p></div></aside>
+ </div>
+</section>
+<section id="printArea"></section>
+</main>
+<footer>AnaDesign Studio · Kreativnost počinje jednom idejom</footer>
+<script>
+const labels={ebook:'E-book Creator',planner:'Planner Creator',workbook:'Workbook Creator',help:'Pronalazak ideje'};
+const state={type:'ebook',step:0,idea:'',audience:'',purpose:'',title:'',style:'Elegantno',chapters:[],active:0,contents:{},savedName:''};
+const steps=['Vrsta proizvoda','Tvoja ideja','Kome je namenjen?','Naslov i izgled','Kreiranje sadržaja'];
+const examples={
+ ebook:['Vodič za početnike','Zbirka zdravih recepata','Praktičan priručnik','Inspirativna e-knjiga'],
+ planner:['Dnevni planer','Nedeljni planer','Planer navika','Dnevnik zahvalnosti'],
+ workbook:['Radna sveska za učenje','Lični razvoj i ciljevi','Kreativne vežbe','Plan za ostvarenje ciljeva']
+};
+function start(type){state.type=type;state.step=0;state.idea='';state.audience='';state.purpose='';state.title='';state.chapters=[];state.contents={};document.getElementById('home').classList.add('hidden');document.getElementById('wizard').classList.add('active');renderStep()}
+function goHome(){document.getElementById('wizard').classList.remove('active');document.getElementById('home').classList.remove('hidden')}
+function renderStep(){
+ const s=state.step;document.getElementById('stepCount').textContent=`Korak ${s+1} od 5`;document.getElementById('progressBar').style.width=((s+1)*20)+'%';
+ const box=document.getElementById('stepContent');let html='';
+ if(s===0){
+  html=`<h2 class="step-title">Šta želiš da napraviš?</h2><p class="step-desc">Izaberi format koji ti najviše odgovara. Nema pogrešnog izbora.</p><div class="choice-list">
+  ${choice('ebook','📖 E-knjiga','Knjiga, vodič, recepti ili priručnik')}
+  ${choice('planner','🗓️ Planer','Organizacija vremena, navika i ciljeva')}
+  ${choice('workbook','✍️ Radna sveska','Pitanja, zadaci, vežbe i učenje')}
+  </div>`;
+ }else if(s===1){
+  html=`<h2 class="step-title">Koja je tvoja ideja?</h2><p class="step-desc">Napiši ukratko šta bi voleo/volela da napraviš. Ako još nemaš ideju, izaberi jedan od primera.</p><div class="field"><label for="idea">Moja ideja</label><textarea id="idea" placeholder="Na primer: Želim da napravim vodič sa jednostavnim receptima za zdravije obroke...">${esc(state.idea)}</textarea></div><div class="hint">Možeš početi i od jedne rečenice. Kasnije ćemo je proširiti.</div><div class="field"><label>Primeri za inspiraciju</label><div class="choice-list">${examples[state.type].map(x=>`<button class="choice" onclick="useExample('${escAttr(x)}')">${x}</button>`).join('')}</div></div>`;
+ }else if(s===2){
+  html=`<h2 class="step-title">Kome želiš da pomogneš?</h2><p class="step-desc">Razmisli ko bi koristio tvoj proizvod. To će nam pomoći da odredimo ton i sadržaj.</p><div class="field"><label for="audience">Moj proizvod je namenjen...</label><input id="audience" value="${esc(state.audience)}" placeholder="Na primer: početnicima, roditeljima, studentima..."></div><div class="field"><label for="purpose">Šta će osoba dobiti od proizvoda?</label><textarea id="purpose" placeholder="Na primer: naučiće da organizuje nedelju i lakše planira obaveze...">${esc(state.purpose)}</textarea></div><div class="hint">Ne moraš imati marketinško znanje. Piši svojim rečima.</div>`;
+ }else if(s===3){
+  const suggested=state.idea?state.idea.split(' ').slice(0,6).join(' '):'Moj prvi vodič';
+  html=`<h2 class="step-title">Daj svom proizvodu ime</h2><p class="step-desc">Naslov ne mora biti savršen. Možeš ga promeniti u bilo kom trenutku.</p><div class="field"><label for="titleInput">Naslov proizvoda</label><input id="titleInput" value="${esc(state.title||suggested)}" placeholder="Upiši naslov"></div><div class="field"><label>Izaberi stil dizajna</label><div class="choice-list">${['Elegantno','Minimalistički','Toplo i prirodno','Razigrano'].map(v=>`<button class="choice ${state.style===v?'selected':''}" onclick="pickStyle('${v}',this)"><b>${v}</b><small>${v==='Elegantno'?'Ljubičasta, zlatna i sofisticirana':v==='Minimalistički'?'Čisto, jednostavno i prozračno':v==='Toplo i prirodno'?'Nežne zemljane boje': 'Veselo i kreativno'}</small></button>`).join('')}</div></div>`;
+ }else{
+  const defaults=makeChapters();if(!state.chapters.length)state.chapters=defaults;
+  const active=state.chapters[state.active]||state.chapters[0];state.active=Math.min(state.active,state.chapters.length-1);
+  html=`<h2 class="step-title">Sada stvaramo sadržaj</h2><p class="step-desc">Dobili smo početni raspored. Izaberi deo sa leve strane i upiši svoj tekst. Možeš menjati naslove i dodavati svoje ideje.</p>
+  <div class="summary"><strong>TVOJ PROIZVOD</strong><span>${esc(state.title)} · ${labels[state.type]}</span></div>
+  <div class="editor"><div class="chapter-list">${state.chapters.map((c,i)=>`<button class="chapter-item ${i===state.active?'active':''}" onclick="selectChapter(${i})">${i+1}. ${esc(c)}</button>`).join('')}<button class="chapter-item" onclick="addChapter()">＋ Dodaj deo</button></div>
+  <div class="editor-area"><div class="field" style="margin-top:0"><label for="chapterTitle">Naslov ovog dela</label><input id="chapterTitle" value="${esc(active)}" onchange="renameChapter(this.value)"></div><div class="field"><label for="chapterText">Tvoj sadržaj</label><textarea id="chapterText" placeholder="Ovde napiši tekst, objašnjenje, savete ili zadatke...">${esc(state.contents[state.active]||'')}</textarea><div class="hint">Mali savet: piši kratko i jasno. Jedna korisna ideja po odeljku je odličan početak.</div></div></div></div>
+  <div class="actions"><button class="btn secondary" onclick="preview()">Pregled proizvoda</button><button class="btn" onclick="saveProject()">Sačuvaj rad</button></div>`;
+ }
+ box.innerHTML=html+`<div class="actions"><button class="btn ghost" onclick="prevStep()" ${s===0?'disabled':''}>← Nazad</button><button class="btn" onclick="nextStep()">${s===4?'Završi i pregledaj →':'Nastavi →'}</button></div>`;
+ document.getElementById('sideText').textContent=s===4?'Tvoj sadržaj se čuva dok radiš. Kada budeš spreman/spremna, otvori pregled i sačuvaj ga kao PDF.':'Ne moraš da žuriš. Popuni samo ono što znaš, a ostalo možeš dopuniti kasnije.';
+}
+function choice(v,icon,desc){return `<button class="choice ${state.type===v?'selected':''}" onclick="state.type='${v}';renderStep()"><b>${icon}</b><small>${desc}</small></button>`}
+function makeChapters(){if(state.type==='planner')return ['Naslovna strana','Moji prioriteti','Planiranje','Beleške'];if(state.type==='workbook')return ['Uvod i cilj','Vežba 1','Vežba 2','Moji zaključci'];return ['Uvod','Prvi koraci','Glavni sadržaj','Praktični saveti','Zaključak'];}
+function nextStep(){
+ if(state.step===1){state.idea=document.getElementById('idea').value.trim();if(!state.idea){alert('Napiši makar jednu rečenicu o svojoj ideji ili izaberi primer.');return}}
+ if(state.step===2){state.audience=document.getElementById('audience').value.trim();state.purpose=document.getElementById('purpose').value.trim();if(!state.audience){alert('Napiši kome je proizvod namenjen.');return}}
+ if(state.step===3){state.title=document.getElementById('titleInput').value.trim();if(!state.title){alert('Upiši naslov proizvoda.');return}}
+ if(state.step===4){captureEditor();preview();return}
+ state.step++;renderStep();
+}
+function prevStep(){if(state.step>0){if(state.step===4)captureEditor();state.step--;renderStep()}}
+function useExample(v){document.getElementById('idea').value=v;state.idea=v}
+function pickStyle(v,el){state.style=v;document.querySelectorAll('.choice').forEach(x=>x.classList.remove('selected'));el.classList.add('selected')}
+function selectChapter(i){captureEditor();state.active=i;renderStep()}
+function captureEditor(){const t=document.getElementById('chapterText'),h=document.getElementById('chapterTitle');if(t)state.contents[state.active]=t.value;if(h)state.chapters[state.active]=h.value}
+function renameChapter(v){state.chapters[state.active]=v}
+function addChapter(){captureEditor();state.chapters.push('Novi deo');state.active=state.chapters.length-1;renderStep()}
+function saveProject(){captureEditor();const data={...state,savedAt:new Date().toISOString()};localStorage.setItem('anadesignCreativeStudio',JSON.stringify(data));alert('Tvoj rad je sačuvan u ovom pregledaču. Možeš nastaviti kasnije na istom uređaju i u istom pregledaču.')}
+function preview(){
+ if(state.step===4)captureEditor();
+ const area=document.getElementById('printArea');let body='';
+ state.chapters.forEach((c,i)=>{body+=`<h2>${esc(c)}</h2><p>${esc(state.contents[i]||'Ovde možeš dopuniti sadržaj.')}</p>`});
+ area.innerHTML=`<div class="preview-paper"><div class="cover"><small>ANADESIGN STUDIO</small><h1>${esc(state.title||'Moj digitalni proizvod')}</h1><p>${esc(state.idea)}</p><p style="color:#8a6b37">${esc(state.style)}</p></div><h2>O ovom proizvodu</h2><p>${esc(state.purpose||'')}</p>${body}<p style="margin-top:50px;text-align:center;color:#8a6b37">Kreirano uz AnaDesign Studio</p></div>`;
+ const w=window.open('','_blank');if(!w){alert('Pregledač je blokirao novi prozor. Dozvoli pop-up prozore za ovu stranicu i pokušaj ponovo.');return}
+ w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(state.title)}</title><style>body{font:15px Arial;color:#292333;max-width:760px;margin:40px auto;padding:20px;line-height:1.7}.cover{min-height:70vh;border:2px solid #d9b66f;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:30px;page-break-after:always}.cover small{letter-spacing:3px;color:#8a6b37}.cover h1{font:42px Georgia;color:#352044}h2{font:27px Georgia;color:#4d326c;margin-top:35px}p{white-space:pre-wrap}.print{position:fixed;top:10px;right:10px;background:#d9b66f;border:0;padding:12px;border-radius:8px}@media print{.print{display:none}body{margin:0;padding:15mm}}</style></head><body><button class="print" onclick="window.print()">Sačuvaj kao PDF / Štampaj</button>${area.innerHTML}</body></html>`);w.document.close();
+}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function escAttr(s){return esc(s).replace(/"/g,'&quot;')}
+</script>
+</body>
+</html>
