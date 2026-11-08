@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#171126">
+<title>Smart Life Planner | AnaDesign Studio</title>
+<style>
+:root{--bg:#100d1b;--panel:#1d1830;--panel2:#27203c;--gold:#d9b568;--purple:#a78bfa;--text:#f5f0ff;--muted:#aaa1bd;--line:#39304d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+button,input,textarea,select{font:inherit}
+.app{max-width:1250px;margin:auto;padding:22px}
+header{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:20px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:48px;height:48px;border:1px solid var(--gold);border-radius:15px;display:grid;place-items:center;color:var(--gold);font-size:27px}
+h1{font-size:22px;margin:0;color:var(--gold)}
+.subtitle{color:var(--muted);font-size:12px;margin-top:5px}
+.today{text-align:right;color:var(--muted);font-size:13px}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0}
+nav button,.btn{border:1px solid var(--line);background:var(--panel);color:var(--text);padding:11px 15px;border-radius:10px;cursor:pointer}
+nav button.active,.btn.primary{background:var(--gold);color:#21182a;border-color:var(--gold);font-weight:bold}
+button:hover{filter:brightness(1.12)}
+h2{font-size:25px;margin:8px 0;color:var(--gold)}
+h3{margin:0 0 12px}
+.muted{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:19px;margin-bottom:15px}
+.stat{font-size:29px;color:var(--gold);font-weight:bold;margin-top:10px}
+.stat-label{color:var(--muted);font-size:13px}
+.welcome{background:linear-gradient(120deg,#302348,#1d1830);border:1px solid #51416a;border-radius:18px;padding:25px;margin-bottom:18px}
+.welcome p{color:#d2c8e2;line-height:1.6}
+.formrow{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}
+input,textarea,select{background:#120f20;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:9px;min-width:0}
+input[type=text],input[type=date],input[type=time],textarea,select{flex:1;width:100%}
+textarea{min-height:100px;resize:vertical}
+.formrow input{flex:1}
+.item{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+.item:last-child{border:0}
+.item .content{flex:1;min-width:0;overflow-wrap:anywhere}
+.item.done .content{text-decoration:line-through;color:var(--muted)}
+.small{font-size:12px;color:var(--muted);margin-top:4px}
+.delete{background:transparent;color:#e9a4a4;border:0;cursor:pointer;font-size:18px}
+.empty{color:var(--muted);padding:15px 0}
+.section{display:none}
+.section.active{display:block}
+.tag{color:var(--gold);font-size:12px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:25px}
+@media(max-width:750px){.grid{grid-template-columns:1fr 1fr}.app{padding:14px}.today{text-align:left}}
+@media(max-width:480px){.grid{grid-template-columns:1fr}nav button{flex:1;font-size:12px;padding:10px 7px}.welcome{padding:18px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+ <div class="brand">
+  <div class="logo">A</div>
+  <div><h1>Smart Life Planner</h1><div class="subtitle">ANA DESIGN STUDIO · ORGANIZUJ SVOJ ŽIVOT</div></div>
+ </div>
+ <div class="today" id="today"></div>
+</header>
+
+<nav id="nav">
+ <button class="active" data-tab="home">Početna</button>
+ <button data-tab="tasks">Zadaci</button>
+ <button data-tab="calendar">Kalendar</button>
+ <button data-tab="notes">Beleške</button>
+ <button data-tab="goals">Ciljevi</button>
+ <button data-tab="shopping">Kupovina</button>
+ <button data-tab="alarms">Alarmi</button>
+</nav>
+
+<section class="section active" id="home">
+ <div class="welcome">
+  <div class="tag">TVOJ LIČNI ORGANIZATOR</div>
+  <h2>Dobro došla u svoj novi dan!</h2>
+  <p>Organizuj obaveze, zabeleži ideje, postavi ciljeve i ne zaboravi ono što ti je važno. Sve na jednom mestu.</p>
+  <button class="btn primary" onclick="showTab('tasks')">Pogledaj moje zadatke →</button>
+ </div>
+ <div class="grid">
+  <div class="card"><div class="stat-label">Svi zadaci</div><div class="stat" id="taskCount">0</div></div>
+  <div class="card"><div class="stat-label">Završeni zadaci</div><div class="stat" id="doneCount">0</div></div>
+  <div class="card"><div class="stat-label">Moji ciljevi</div><div class="stat" id="goalCount">0</div></div>
+ </div>
+ <div class="card"><h3>📌 Današnji zadaci</h3><div id="todayTasks"></div></div>
+ <div class="card"><h3>⏰ Sledeći podsetnici</h3><div id="nextAlarms"></div></div>
+</section>
+
+<section class="section" id="tasks">
+ <h2>Moji zadaci</h2><p class="muted">Dodaj obaveze i označi ih kada ih završiš.</p>
+ <div class="card">
+  <div class="formrow"><input id="taskInput" type="text" placeholder="Šta treba da uradim?"><input id="taskDate" type="date"></div>
+  <button class="btn primary" onclick="addTask()">+ Dodaj zadatak</button>
+ </div>
+ <div class="card"><div id="taskList"></div></div>
+</section>
+
+<section class="section" id="calendar">
+ <h2>Kalendar obaveza</h2><p class="muted">Izaberi datum i pogledaj planirane zadatke i alarme.</p>
+ <div class="card"><input type="date" id="calendarDate" onchange="renderCalendar()"><div id="calendarList" style="margin-top:15px"></div></div>
+</section>
+
+<section class="section" id="notes">
+ <h2>Moje beleške</h2><p class="muted">Sačuvaj ideje, misli i važne informacije.</p>
+ <div class="card">
+  <input id="noteTitle" type="text" placeholder="Naslov beleške">
+  <div style="height:10px"></div>
+  <textarea id="noteText" placeholder="Napiši svoju belešku..."></textarea>
+  <div style="height:10px"></div><button class="btn primary" onclick="addNote()">Sačuvaj belešku</button>
+ </div>
+ <div id="noteList"></div>
+</section>
+
+<section class="section" id="goals">
+ <h2>Moji ciljevi</h2><p class="muted">Veliki ciljevi počinju malim koracima.</p>
+ <div class="card">
+  <div class="formrow"><input id="goalInput" type="text" placeholder="Moj novi cilj..."></div>
+  <button class="btn primary" onclick="addGoal()">+ Dodaj cilj</button>
+ </div>
+ <div class="card"><div id="goalList"></div></div>
+</section>
+
+<section class="section" id="shopping">
+ <h2>Lista za kupovinu</h2><p class="muted">Dodaj ono što treba da kupiš.</p>
+ <div class="card">
+  <div class="formrow"><input id="shopInput" type="text" placeholder="Dodaj namirnicu ili proizvod..."></div>
+  <button class="btn primary" onclick="addShopping()">+ Dodaj na listu</button>
+ </div>
+ <div class="card"><div id="shoppingList"></div></div>
+</section>
+
+<section class="section" id="alarms">
+ <h2>Alarmi i podsetnici</h2><p class="muted">Postavi vreme i poruku za važnu obavezu.</p>
+ <div class="card">
+  <label class="muted">Naziv podsetnika</label>
+  <div style="height:7px"></div><input id="alarmTitle" type="text" placeholder="Npr. Vreme je za buđenje">
+  <div style="height:12px"></div>
+  <div class="formrow"><div style="flex:1"><label class="muted">Datum</label><input id="alarmDate" type="date"></div><div style="flex:1"><label class="muted">Vreme</label><input id="alarmTime" type="time"></div></div>
+  <label class="muted">Ponavljanje</label>
+  <div style="height:7px"></div>
+  <select id="alarmRepeat"><option value="once">Jednom</option><option value="daily">Svakog dana</option></select>
+  <div style="height:12px"></div>
+  <button class="btn primary" onclick="addAlarm()">+ Sačuvaj podsetnik</button>
+  <button class="btn" onclick="enableNotifications()">Dozvoli obaveštenja</button>
+  <button class="btn" onclick="testSound()">▶ Testiraj zvuk</button>
+  <p class="small">Zvuk se proverava dok je planer otvoren. Za pouzdane alarme kada je aplikacija zatvorena biće potrebna dodatna podrška.</p>
+ </div>
+ <div class="card"><h3>Moji podsetnici</h3><div id="alarmList"></div></div>
+</section>
+
+<footer>© AnaDesign Studio · Smart Life Planner</footer>
+</div>
+
+<script>
+const defaults={tasks:[],notes:[],goals:[],shopping:[],alarms:[]};
+let data={...defaults};
+try{Object.keys(defaults).forEach(k=>data[k]=JSON.parse(localStorage.getItem("slp_"+k))||[])}catch(e){}
+function save(){Object.keys(data).forEach(k=>localStorage.setItem("slp_"+k,JSON.stringify(data[k])));renderAll()}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function todayISO(){let d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function showTab(tab){document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));document.getElementById(tab).classList.add("active");if(tab==="calendar")renderCalendar()}
+document.getElementById("nav").addEventListener("click",e=>{let b=e.target.closest("button[data-tab]");if(b)showTab(b.dataset.tab)});
+function addTask(){let t=taskInput.value.trim();if(!t)return;data.tasks.push({id:Date.now(),title:t,date:taskDate.value,done:false});taskInput.value="";save()}
+function toggleTask(id){let t=data.tasks.find(x=>x.id===id);if(t)t.done=!t.done;save()}
+function del(arr,id){data[arr]=data[arr].filter(x=>x.id!==id);save()}
+function addNote(){let title=noteTitle.value.trim(),text=noteText.value.trim();if(!title&&!text)return;data.notes.push({id:Date.now(),title,text});noteTitle.value="";noteText.value="";save()}
+function addGoal(){let title=goalInput.value.trim();if(!title)return;data.goals.push({id:Date.now(),title,done:false});goalInput.value="";save()}
+function toggleGoal(id){let g=data.goals.find(x=>x.id===id);if(g)g.done=!g.done;save()}
+function addShopping(){let title=shopInput.value.trim();if(!title)return;data.shopping.push({id:Date.now(),title,done:false});shopInput.value="";save()}
+function toggleShop(id){let s=data.shopping.find(x=>x.id===id);if(s)s.done=!s.done;save()}
+function addAlarm(){let title=alarmTitle.value.trim(),date=alarmDate.value,time=alarmTime.value;if(!title||!date||!time){alert("Unesi naziv, datum i vreme podsetnika.");return}data.alarms.push({id:Date.now(),title,date,time,repeat:alarmRepeat.value,lastFired:""});alarmTitle.value="";save()}
+function enableNotifications(){if(!("Notification"in window)){alert("Ovaj pregledač ne podržava obaveštenja.");return}Notification.requestPermission().then(p=>alert(p==="granted"?"Obaveštenja su dozvoljena.":"Obaveštenja nisu dozvoljena."))}
+function testSound(){playSound();alert("Test zvuka je pokrenut. Proveri jačinu zvuka na uređaju.")}
+function playSound(){try{let ctx=new (window.AudioContext||window.webkitAudioContext)();[0,0.35,0.7].forEach(t=>{let o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=880;o.type="sine";g.gain.setValueAtTime(0.001,ctx.currentTime+t);g.gain.exponentialRampToValueAtTime(0.25,ctx.currentTime+t+0.03);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+t+0.22);o.start(ctx.currentTime+t);o.stop(ctx.currentTime+t+0.23)})}catch(e){}}
+function checkAlarms(){let now=new Date(),date=todayISO(),time=String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");let changed=false;data.alarms.forEach(a=>{let key=date+" "+time;if(a.time===time&&((a.repeat==="daily")||(a.date===date))&&a.lastFired!==key){a.lastFired=key;changed=true;playSound();if("Notification"in window&&Notification.permission==="granted")new Notification("Smart Life Planner",{body:a.title});else alert("⏰ "+a.title)}});if(changed)save()}
+function item(title,sub,action,done=false){return `<div class="item ${done?"done":""}"><div class="content">${esc(title)}${sub?`<div class="small">${esc(sub)}</div>`:""}</div>${action}</div>`}
+function renderAll(){
+taskList.innerHTML=data.tasks.length?data.tasks.slice().sort((a,b)=>(a.date||"").localeCompare(b.date||"")).map(t=>item(t.title,t.date||"Bez datuma",`<input aria-label="Završi zadatak" type="checkbox" ${t.done?"checked":""} onchange="toggleTask(${t.id})"><button class="delete" onclick="del('tasks',${t.id})">×</button>`,t.done)).join(""):'<div class="empty">Još nema zadataka.</div>';
+todayTasks.innerHTML=data.tasks.filter(t=>t.date===todayISO()).length?data.tasks.filter(t=>t.date===todayISO()).map(t=>item(t.title,"",`<input type="checkbox" ${t.done?"checked":""} onchange="toggleTask(${t.id})">`,t.done)).join(""):'<div class="empty">Za danas nema unetih zadataka.</div>';
+noteList.innerHTML=data.notes.length?data.notes.slice().reverse().map(n=>`<div class="card"><h3>${esc(n.title||"Beleška")}</h3><p style="white-space:pre-wrap">${esc(n.text)}</p><button class="delete" onclick="del('notes',${n.id})">Obriši belešku ×</button></div>`).join(""):'<div class="empty">Još nema beleški.</div>';
+goalList.innerHTML=data.goals.length?data.goals.map(g=>item(g.title,"",`<input type="checkbox" ${g.done?"checked":""} onchange="toggleGoal(${g.id})"><button class="delete" onclick="del('goals',${g.id})">×</button>`,g.done)).join(""):'<div class="empty">Još nema ciljeva.</div>';
+shoppingList.innerHTML=data.shopping.length?data.shopping.map(s=>item(s.title,"",`<input type="checkbox" ${s.done?"checked":""} onchange="toggleShop(${s.id})"><button class="delete" onclick="del('shopping',${s.id})">×</button>`,s.done)).join(""):'<div class="empty">Lista za kupovinu je prazna.</div>';
+alarmList.innerHTML=data.alarms.length?data.alarms.map(a=>item(a.title,a.date+" · "+a.time+(a.repeat==="daily"?" · Svakog dana":""),`<button class="delete" onclick="del('alarms',${a.id})">×</button>`)).join(""):'<div class="empty">Nema podešenih podsetnika.</div>';
+nextAlarms.innerHTML=data.alarms.length?data.alarms.slice().sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)).slice(0,4).map(a=>item(a.title,a.date+" · "+a.time,"")).join(""):'<div class="empty">Nema podsetnika.</div>';
+taskCount.textContent=data.tasks.length;doneCount.textContent=data.tasks.filter(t=>t.done).length;goalCount.textContent=data.goals.length;
+}
+function renderCalendar(){let d=calendarDate.value||todayISO();calendarDate.value=d;let ts=data.tasks.filter(t=>t.date===d),as=data.alarms.filter(a=>(a.date===d)||a.repeat==="daily");let html=ts.map(t=>item("📌 "+t.title,t.done?"Završeno":"Zadatak",`<input type="checkbox" ${t.done?"checked":""} onchange="toggleTask(${t.id})">`,t.done)).join("")+as.map(a=>item("⏰ "+a.title,a.time,"")).join("");calendarList.innerHTML=html||'<div class="empty">Nema planiranih obaveza za ovaj datum.</div>'}
+document.getElementById("today").textContent=new Date().toLocaleDateString("sr-RS",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+taskDate.value=todayISO();calendarDate.value=todayISO();alarmDate.value=todayISO();
+renderAll();setInterval(checkAlarms,15000);
+</script>
+</body>
+</html>
