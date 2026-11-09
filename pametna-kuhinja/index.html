@@ -1,0 +1,322 @@
+
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pametna kuhinja</title>
+<style>
+:root {
+  --green:#52765d;
+  --dark:#263c30;
+  --cream:#f8f6ef;
+  --orange:#d99b60;
+  --white:#fff;
+  --muted:#788078;
+  --border:#e9e8df;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:#303a32;font-family:Arial,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+header{background:var(--dark);color:white;padding:22px 5%;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.logo{font-size:23px;font-weight:bold}
+.logo span{color:#d9b88d}
+header small{display:block;color:#d4dfd5;margin-top:5px}
+main{max-width:1250px;margin:auto;padding:25px 20px 60px}
+.welcome{background:linear-gradient(120deg,#52765d,#304c3a);color:white;padding:30px;border-radius:18px;margin-bottom:25px}
+.welcome h1{margin:0 0 10px;font-size:30px}
+.welcome p{margin:0;color:#e5eee6}
+nav{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:25px}
+nav button{border:1px solid var(--border);background:white;padding:12px 17px;border-radius:10px;color:#405247}
+nav button.active,nav button:hover{background:var(--green);color:white;border-color:var(--green)}
+.panel{display:none}
+.panel.active{display:block}
+h2{color:var(--dark);margin-top:0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:25px}
+.stat,.card,.section{background:white;border:1px solid var(--border);border-radius:14px;padding:18px}
+.stat strong{display:block;font-size:27px;color:var(--green);margin-top:8px}
+.stat span{color:var(--muted);font-size:13px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0 25px}
+.btn{background:var(--green);color:white;border:0;border-radius:9px;padding:11px 16px}
+.btn:hover{background:var(--dark)}
+.btn.light{background:#edf2ec;color:var(--dark)}
+.btn.delete{background:#f9e9e5;color:#9a493b}
+input,select{padding:11px;border:1px solid #dcded5;border-radius:8px;background:white;min-width:0}
+.form{display:flex;gap:9px;flex-wrap:wrap;margin:15px 0}
+.form input,.form select{flex:1;min-width:130px}
+.recipe-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:15px}
+.recipe{background:white;border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.recipe .photo{height:115px;background:#e8eee5;display:grid;place-items:center;font-size:48px}
+.recipe .body{padding:16px}
+.recipe h3{margin:0 0 8px;color:var(--dark)}
+.recipe p{color:var(--muted);font-size:14px;line-height:1.5}
+.tag{display:inline-block;background:#edf2ec;color:var(--green);padding:5px 9px;border-radius:20px;font-size:12px;margin:3px}
+.list-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--border)}
+.list-row:last-child{border:0}
+.muted{color:var(--muted);font-size:13px}
+.day{background:white;border:1px solid var(--border);border-radius:12px;padding:15px;margin-bottom:12px}
+.day h3{margin:0 0 10px;color:var(--green)}
+.empty{padding:30px;text-align:center;color:var(--muted);background:white;border-radius:12px}
+footer{text-align:center;padding:25px;color:var(--muted);font-size:13px}
+@media(max-width:600px){
+ header{padding:18px}
+ .welcome{padding:23px}
+ .welcome h1{font-size:24px}
+ nav button{flex:1;font-size:13px;padding:10px 7px}
+ main{padding:18px 12px 40px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="logo">🍃 PAMETNA <span>KUHINJA</span></div>
+    <small>Manje bacanja hrane, više uživanja u kuvanju.</small>
+  </div>
+  <div>Vaš mali kuhinjski pomoćnik</div>
+</header>
+
+<main>
+<section class="welcome">
+  <h1>Dobro došli u vašu kuhinju! 🍲</h1>
+  <p>Pronađite ideju za obrok, isplanirajte nedelju i organizujte namirnice.</p>
+</section>
+
+<nav id="navigation">
+  <button class="active" data-tab="home">🏠 Početna</button>
+  <button data-tab="recipes">📖 Recepti</button>
+  <button data-tab="pantry">🥕 Namirnice</button>
+  <button data-tab="planner">📅 Planer</button>
+  <button data-tab="shopping">🛒 Kupovina</button>
+  <button data-tab="favorites">❤️ Omiljeno</button>
+</nav>
+
+<section class="panel active" id="home">
+  <h2>Pregled vaše kuhinje</h2>
+  <div class="stats">
+    <div class="stat"><span>Sačuvani recepti</span><strong id="recipeCount">0</strong></div>
+    <div class="stat"><span>Namirnice u kuhinji</span><strong id="pantryCount">0</strong></div>
+    <div class="stat"><span>Planirani obroci</span><strong id="planCount">0</strong></div>
+    <div class="stat"><span>Za kupovinu</span><strong id="shoppingCount">0</strong></div>
+  </div>
+  <div class="section">
+    <h2>Šta danas kuvamo?</h2>
+    <p class="muted">Pogledajte recepte i pronađite inspiraciju za sledeći obrok.</p>
+    <button class="btn" onclick="showTab('recipes')">Pogledaj recepte →</button>
+    <button class="btn light" onclick="showTab('pantry')">Moje namirnice</button>
+  </div>
+  <div class="section" style="margin-top:16px">
+    <h2>Brzi pregled</h2>
+    <div id="homePreview"></div>
+  </div>
+</section>
+
+<section class="panel" id="recipes">
+  <h2>📖 Knjiga recepata</h2>
+  <div class="form">
+    <input id="recipeSearch" placeholder="Pretraži recepte..." oninput="renderRecipes()">
+    <select id="categoryFilter" onchange="renderRecipes()">
+      <option value="">Sve kategorije</option>
+      <option>Doručak</option><option>Ručak</option><option>Večera</option>
+      <option>Salata</option><option>Poslastica</option>
+    </select>
+  </div>
+  <div class="section" style="margin-bottom:16px">
+    <h3>Dodaj svoj recept</h3>
+    <div class="form">
+      <input id="newRecipeName" placeholder="Naziv recepta">
+      <select id="newRecipeCategory">
+        <option>Doručak</option><option>Ručak</option><option>Večera</option><option>Salata</option><option>Poslastica</option>
+      </select>
+      <input id="newRecipeTime" type="number" min="1" placeholder="Vreme (min)">
+    </div>
+    <input id="newRecipeIngredients" style="width:100%" placeholder="Sastojci odvojeni zarezom">
+    <div style="margin-top:10px">
+      <input id="newRecipeInstructions" style="width:100%" placeholder="Kratko uputstvo za pripremu">
+    </div>
+    <button class="btn" style="margin-top:12px" onclick="addRecipe()">+ Sačuvaj recept</button>
+  </div>
+  <div class="recipe-grid" id="recipeGrid"></div>
+</section>
+
+<section class="panel" id="pantry">
+  <h2>🥕 Moje namirnice</h2>
+  <p class="muted">Unesite šta imate u frižideru, zamrzivaču ili ostavi.</p>
+  <div class="form">
+    <input id="foodName" placeholder="Naziv namirnice">
+    <input id="foodQty" placeholder="Količina (npr. 2 komada)">
+    <input id="foodExpiry" type="date" title="Rok upotrebe">
+    <button class="btn" onclick="addFood()">+ Dodaj</button>
+  </div>
+  <div class="section" id="pantryList"></div>
+  <div class="section" style="margin-top:15px">
+    <h3>💡 Ideje prema mojim namirnicama</h3>
+    <div id="suggestions"></div>
+  </div>
+</section>
+
+<section class="panel" id="planner">
+  <h2>📅 Nedeljni planer obroka</h2>
+  <p class="muted">Izaberite recept za svaki dan i organizujte svoju nedelju.</p>
+  <div id="weekPlan"></div>
+</section>
+
+<section class="panel" id="shopping">
+  <h2>🛒 Lista za kupovinu</h2>
+  <div class="form">
+    <input id="shoppingName" placeholder="Šta treba kupiti?">
+    <button class="btn" onclick="addShopping()">+ Dodaj na listu</button>
+  </div>
+  <div class="section" id="shoppingList"></div>
+  <button class="btn light" onclick="clearBought()" style="margin-top:12px">Ukloni kupljene</button>
+  <button class="btn light" onclick="addMissing()">Dodaj sastojke iz planera</button>
+</section>
+
+<section class="panel" id="favorites">
+  <h2>❤️ Moji omiljeni recepti</h2>
+  <div class="recipe-grid" id="favoriteGrid"></div>
+</section>
+</main>
+
+<footer>🍃 Pametna kuhinja · Vaš prostor za ukusnije dane</footer>
+
+<script>
+const starterRecipes = [
+ {id:1,name:"Mediteranska salata",category:"Salata",time:15,emoji:"🥗",ingredients:["paradajz","krastavac","maslinovo ulje","sir","masline"],instructions:"Iseckajte povrće, dodajte sir, masline i maslinovo ulje."},
+ {id:2,name:"Omlet sa povrćem",category:"Doručak",time:15,emoji:"🍳",ingredients:["jaja","paprika","luk","ulje"],instructions:"Umutite jaja, dodajte iseckano povrće i ispecite u tiganju."},
+ {id:3,name:"Piletina sa povrćem",category:"Ručak",time:40,emoji:"🍗",ingredients:["piletina","šargarepa","brokoli","maslinovo ulje"],instructions:"Začinite piletinu, dodajte povrće i pecite dok sve ne omekša."},
+ {id:4,name:"Krem čorba od brokolija",category:"Večera",time:30,emoji:"🥣",ingredients:["brokoli","krompir","luk","mleko"],instructions:"Skuvajte povrće, izblendajte i dodajte malo mleka."},
+ {id:5,name:"Voćna činija",category:"Doručak",time:10,emoji:"🍓",ingredients:["jabuka","banana","jagode","jogurt"],instructions:"Iseckajte voće i poslužite sa jogurtom."},
+ {id:6,name:"Pečeni krompir",category:"Ručak",time:35,emoji:"🥔",ingredients:["krompir","maslinovo ulje","beli luk","ruzmarin"],instructions:"Isecite krompir, začinite i pecite u rerni dok ne porumeni."}
+];
+
+let recipes = JSON.parse(localStorage.getItem("pk_recipes")) || starterRecipes;
+let pantry = JSON.parse(localStorage.getItem("pk_pantry")) || [];
+let shopping = JSON.parse(localStorage.getItem("pk_shopping")) || [];
+let favorites = JSON.parse(localStorage.getItem("pk_favorites")) || [];
+let plans = JSON.parse(localStorage.getItem("pk_plans")) || {};
+
+const days=["Ponedeljak","Utorak","Sreda","Četvrtak","Petak","Subota","Nedelja"];
+
+function save(){
+ localStorage.setItem("pk_recipes",JSON.stringify(recipes));
+ localStorage.setItem("pk_pantry",JSON.stringify(pantry));
+ localStorage.setItem("pk_shopping",JSON.stringify(shopping));
+ localStorage.setItem("pk_favorites",JSON.stringify(favorites));
+ localStorage.setItem("pk_plans",JSON.stringify(plans));
+ updateHome();
+}
+
+function showTab(id){
+ document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+ document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.tab===id));
+ document.getElementById(id).classList.add("active");
+ renderAll();
+}
+
+document.getElementById("navigation").addEventListener("click",e=>{
+ const btn=e.target.closest("button[data-tab]");
+ if(btn)showTab(btn.dataset.tab);
+});
+
+function addRecipe(){
+ const name=document.getElementById("newRecipeName").value.trim();
+ const ingredients=document.getElementById("newRecipeIngredients").value.split(",").map(x=>x.trim()).filter(Boolean);
+ if(!name||!ingredients.length){alert("Unesite naziv recepta i sastojke.");return;}
+ recipes.push({id:Date.now(),name,category:document.getElementById("newRecipeCategory").value,time:Number(document.getElementById("newRecipeTime").value)||30,emoji:"🍽️",ingredients,instructions:document.getElementById("newRecipeInstructions").value.trim()});
+ ["newRecipeName","newRecipeIngredients","newRecipeTime","newRecipeInstructions"].forEach(id=>document.getElementById(id).value="");
+ save();renderRecipes();
+}
+
+function addFood(){
+ const name=document.getElementById("foodName").value.trim();
+ if(!name){alert("Unesite naziv namirnice.");return;}
+ pantry.push({id:Date.now(),name,qty:document.getElementById("foodQty").value.trim(),expiry:document.getElementById("foodExpiry").value});
+ ["foodName","foodQty","foodExpiry"].forEach(id=>document.getElementById(id).value="");
+ save();renderPantry();
+}
+
+function removeFood(id){pantry=pantry.filter(x=>x.id!==id);save();renderPantry();}
+function addShopping(){
+ const name=document.getElementById("shoppingName").value.trim();
+ if(!name)return;
+ shopping.push({id:Date.now(),name,bought:false});
+ document.getElementById("shoppingName").value="";
+ save();renderShopping();
+}
+function toggleBought(id){const item=shopping.find(x=>x.id===id);if(item)item.bought=!item.bought;save();renderShopping();}
+function removeShopping(id){shopping=shopping.filter(x=>x.id!==id);save();renderShopping();}
+function clearBought(){shopping=shopping.filter(x=>!x.bought);save();renderShopping();}
+
+function toggleFavorite(id){
+ favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];
+ save();renderAll();
+}
+
+function recipeCard(r){
+ const fav=favorites.includes(r.id);
+ return `<article class="recipe">
+ <div class="photo">${r.emoji||"🍽️"}</div>
+ <div class="body"><h3>${escapeHTML(r.name)}</h3>
+ <span class="tag">${escapeHTML(r.category)}</span><span class="tag">⏱ ${r.time} min</span>
+ <p><b>Sastojci:</b> ${r.ingredients.map(escapeHTML).join(", ")}</p>
+ <p>${escapeHTML(r.instructions||"Uputstvo nije uneto.")}</p>
+ <button class="btn light" onclick="toggleFavorite(${r.id})">${fav?"♥ Omiljen":"♡ Omiljeni"}</button>
+ <button class="btn light" onclick="recipeToShopping(${r.id})">+ Sastojci</button>
+ ${r.id>6?`<button class="btn delete" onclick="deleteRecipe(${r.id})">Obriši</button>`:""}
+ </div></article>`;
+}
+
+function escapeHTML(value){
+ return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function renderRecipes(){
+ const search=(document.getElementById("recipeSearch").value||"").toLowerCase();
+ const cat=document.getElementById("categoryFilter").value;
+ const filtered=recipes.filter(r=>(r.name+" "+r.ingredients.join(" ")).toLowerCase().includes(search)&&(!cat||r.category===cat));
+ document.getElementById("recipeGrid").innerHTML=filtered.length?filtered.map(recipeCard).join(""):'<div class="empty">Nema pronađenih recepata.</div>';
+}
+function deleteRecipe(id){if(!confirm("Obrisati ovaj recept?"))return;recipes=recipes.filter(r=>r.id!==id);favorites=favorites.filter(x=>x!==id);save();renderRecipes();}
+function recipeToShopping(id){
+ const r=recipes.find(x=>x.id===id);if(!r)return;
+ r.ingredients.forEach(name=>{if(!shopping.some(x=>x.name.toLowerCase()===name.toLowerCase()&&!x.bought))shopping.push({id:Date.now()+Math.random(),name,bought:false});});
+ save();alert("Sastojci su dodati na listu za kupovinu.");renderShopping();
+}
+function renderPantry(){
+ const box=document.getElementById("pantryList");
+ box.innerHTML=pantry.length?pantry.map(x=>`<div class="list-row"><div><b>${escapeHTML(x.name)}</b><div class="muted">${escapeHTML(x.qty||"Količina nije navedena")} ${x.expiry?" · Rok: "+escapeHTML(x.expiry):""}</div></div><button class="btn delete" onclick="removeFood(${x.id})">Ukloni</button></div>`).join(""):'<div class="empty">Još niste uneli namirnice.</div>';
+ const available=pantry.map(x=>x.name.toLowerCase());
+ const matches=recipes.filter(r=>r.ingredients.some(i=>available.includes(i.toLowerCase())));
+ document.getElementById("suggestions").innerHTML=matches.length?matches.map(r=>`<div class="list-row"><b>${escapeHTML(r.name)}</b><span class="tag">${r.ingredients.filter(i=>available.includes(i.toLowerCase())).length} vaših sastojaka</span></div>`).join(""):'<p class="muted">Dodajte namirnice da biste dobili predloge recepata.</p>';
+}
+function renderPlanner(){
+ document.getElementById("weekPlan").innerHTML=days.map(day=>`<div class="day"><h3>${day}</h3><select onchange="setPlan('${day}',this.value)" style="width:100%"><option value="">Izaberite obrok...</option>${recipes.map(r=>`<option value="${r.id}" ${String(plans[day]||"")===String(r.id)?"selected":""}>${escapeHTML(r.name)}</option>`).join("")}</select>${plans[day]?`<p class="muted">Planirano: ${escapeHTML((recipes.find(r=>r.id==plans[day])||{}).name||"Recept više ne postoji")}</p>`:""}</div>`).join("");
+}
+function setPlan(day,id){if(id)plans[day]=Number(id);else delete plans[day];save();renderPlanner();}
+function renderShopping(){
+ document.getElementById("shoppingList").innerHTML=shopping.length?shopping.map(x=>`<div class="list-row"><label style="display:flex;align-items:center;gap:10px"><input type="checkbox" ${x.bought?"checked":""} onchange="toggleBought(${x.id})"><span style="${x.bought?"text-decoration:line-through;color:#999":""}">${escapeHTML(x.name)}</span></label><button class="btn delete" onclick="removeShopping(${x.id})">×</button></div>`).join(""):'<div class="empty">Lista za kupovinu je prazna.</div>';
+}
+function addMissing(){
+ Object.values(plans).forEach(id=>{const r=recipes.find(x=>x.id==id);if(!r)return;r.ingredients.forEach(name=>{if(!pantry.some(x=>x.name.toLowerCase()===name.toLowerCase())&&!shopping.some(x=>x.name.toLowerCase()===name.toLowerCase()&&!x.bought))shopping.push({id:Date.now()+Math.random(),name,bought:false});});});
+ save();renderShopping();
+}
+function renderFavorites(){
+ const list=recipes.filter(r=>favorites.includes(r.id));
+ document.getElementById("favoriteGrid").innerHTML=list.length?list.map(recipeCard).join(""):'<div class="empty">Još nemate omiljenih recepata. Sačuvajte ih klikom na dugme ♡.</div>';
+}
+function updateHome(){
+ document.getElementById("recipeCount").textContent=recipes.length;
+ document.getElementById("pantryCount").textContent=pantry.length;
+ document.getElementById("planCount").textContent=Object.keys(plans).length;
+ document.getElementById("shoppingCount").textContent=shopping.filter(x=>!x.bought).length;
+ const planned=Object.entries(plans).map(([d,id])=>({day:d,recipe:recipes.find(r=>r.id==id)})).filter(x=>x.recipe);
+ document.getElementById("homePreview").innerHTML=planned.length?planned.slice(0,4).map(x=>`<div class="list-row"><b>${x.day}</b><span>${escapeHTML(x.recipe.name)}</span></div>`).join(""):'<p class="muted">Još nema planiranih obroka. Otvorite planer i izaberite recepte.</p>';
+}
+function renderAll(){
+ renderRecipes();renderPantry();renderPlanner();renderShopping();renderFavorites();updateHome();
+}
+renderAll();
+</script>
+</body>
+</html>
